@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+ supertest:
+  build:
+   context: .
+  ports:
+   - 8000:8000
+  environment:
+   - PORT=8000
+   - PG_CONNECTION_STRING=host=postgres port=5432 user=postgres password=test dbname=postgres sslmode=disable
+  command: /supertest
+
+ postgres:
+  image: postgres:13.2-alpine
+  ports:
+   - 5432:5432
+  environment:
+    POSTGRES_PASSWORD: test
+  volumes:
+    - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
